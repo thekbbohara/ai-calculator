@@ -2,12 +2,14 @@ import { RefObject } from "react";
 import { canvasToImage } from "./canvas";
 import axios from "axios";
 
-const calculate = async (canvasRef: RefObject<HTMLCanvasElement>) => {
+const calculate = async (
+  canvasRef: RefObject<HTMLCanvasElement>,
+): Promise<{ [key: string]: any } | null> => {
   try {
     const base64Data = canvasToImage(canvasRef);
     if (!base64Data) {
       console.error("Failed to convert canvas to image");
-      return;
+      return null;
     }
     const img = base64Data.split(",")[1];
     // Send the image to the backend API
@@ -17,9 +19,10 @@ const calculate = async (canvasRef: RefObject<HTMLCanvasElement>) => {
       displayName: "draw to Calc",
     });
     // Log the response from the API
-    console.log(response.data);
+    return response.data;
   } catch (error) {
     console.error("Error uploading image:", error);
+    return null;
   }
 };
 

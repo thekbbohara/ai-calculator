@@ -8,6 +8,7 @@ import {
   erase,
   resetCanvas,
   startDrawing,
+  writeAnswer,
 } from "@/utils/canvas";
 import { MouseEvent, useEffect, useRef, useState } from "react";
 const page = () => {
@@ -29,8 +30,16 @@ const page = () => {
         resetCanvas={() => {
           resetCanvas(canvasRef);
         }}
-        calculate={() => {
-          calculate(canvasRef);
+        calculate={async () => {
+          const data = await calculate(canvasRef);
+          if (data != null) {
+            console.log(typeof data);
+            const msg = JSON.parse(data.message);
+            console.log("data.message", typeof msg);
+            console.log(msg, msg[0]);
+            const { expr, result } = msg[0];
+            writeAnswer(canvasRef, `${expr} = ${result}`);
+          }
         }}
         selectedColor={selectedColor}
         setSelectedColor={setSelectedColor}
