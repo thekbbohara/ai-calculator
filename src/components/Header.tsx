@@ -9,12 +9,14 @@ const Header = ({
   setIsDrawing,
   setIsErasing,
   resetCanvas,
+  calculate,
 }: {
   selectedColor: string;
   setSelectedColor: Dispatch<SetStateAction<string>>;
   setIsDrawing: Dispatch<SetStateAction<boolean>>;
   setIsErasing: Dispatch<SetStateAction<boolean>>;
   resetCanvas: () => void;
+  calculate: () => void;
 }) => {
   return (
     <header className=" py-2 absolute w-full top-0 mx-auto">
@@ -39,7 +41,9 @@ const Header = ({
             <EraserIcon />
           </Button>
         </div>
-        <Button variant="destructive">run</Button>
+        <Button variant="destructive" onClick={calculate}>
+          run
+        </Button>
       </div>
     </header>
   );

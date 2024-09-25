@@ -1,6 +1,7 @@
 "use client";
 import Header from "@/components/Header";
 import Eraser from "@/components/ui/Eraser";
+import { calculate } from "@/utils";
 import {
   canvasSetup,
   draw,
@@ -27,6 +28,9 @@ const page = () => {
       <Header
         resetCanvas={() => {
           resetCanvas(canvasRef);
+        }}
+        calculate={() => {
+          calculate(canvasRef);
         }}
         selectedColor={selectedColor}
         setSelectedColor={setSelectedColor}
