@@ -1,24 +1,22 @@
-import { MouseEvent, RefObject } from "react";
-const erase = (
+import { Dispatch, MouseEvent, RefObject, SetStateAction } from "react";
+const startErasing = (
   e: MouseEvent<HTMLCanvasElement>,
   canvasRef: RefObject<HTMLCanvasElement>,
-  eraserSize: number,
-  isDrawing: boolean,
+  eraserSize: number = 20,
+  setIsErasing: Dispatch<SetStateAction<boolean>>,
 ) => {
-  if (!isDrawing) {
-    return;
-  }
   const canvas = canvasRef.current;
   if (canvas) {
     const ctx = canvas?.getContext("2d");
     if (ctx) {
       ctx.clearRect(
-        e.nativeEvent.offsetX - eraserSize / 2, // Center the eraser
+        e.nativeEvent.offsetX - eraserSize / 2,
         e.nativeEvent.offsetY - eraserSize / 2,
         eraserSize,
         eraserSize,
       );
+      setIsErasing(true);
     }
   }
 };
-export default erase;
+export default startErasing;

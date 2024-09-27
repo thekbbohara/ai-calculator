@@ -16,12 +16,18 @@ const colors = [
 export function ColorPicker({
   setSelectedColor,
   selectedColor,
+  setMode,
+  setIsErasing,
 }: {
   setSelectedColor: Dispatch<SetStateAction<string>>;
+  setMode: Dispatch<SetStateAction<"draw" | "erase">>;
   selectedColor: string;
+  setIsErasing: Dispatch<SetStateAction<boolean>>;
 }) {
   const handleColorClick = (color: string) => {
     setSelectedColor(color);
+    setIsErasing(false);
+    setMode("draw");
   };
 
   return (

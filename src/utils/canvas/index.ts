@@ -4,11 +4,13 @@ import draw from "./draw";
 import erase from "./erase";
 import resetCanvas from "./resetCanvas";
 import startDrawing from "./startDrawing";
+import startErasing from "./startErasing";
 import writeAnswer from "./writeAnswerBETA";
 
 export {
   draw,
   startDrawing,
+  startErasing,
   erase,
   canvasSetup,
   resetCanvas,

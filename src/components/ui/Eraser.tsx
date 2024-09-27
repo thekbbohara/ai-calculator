@@ -6,9 +6,11 @@ import React, { useState, useEffect } from "react";
 export default function Eraser({
   size = 20,
   selectedColor = "#FFFFFF",
+  isErasing,
 }: {
   size?: number;
   selectedColor?: string;
+  isErasing: boolean;
 }) {
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
@@ -33,14 +35,19 @@ export default function Eraser({
     <div
       style={{
         position: "fixed",
-        backgroundColor: selectedColor,
+        backgroundColor: isErasing ? selectedColor : "transparent",
         left: position.x - size / 2,
         top: position.y - size / 2,
         pointerEvents: "none",
         zIndex: 9999,
         width: size,
         height: size,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
-    ></div>
+    >
+      <EraserIcon size={size > 20 ? 20 : size - 5} />
+    </div>
   );
 }

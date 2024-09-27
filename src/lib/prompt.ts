@@ -1,20 +1,39 @@
-export const prompt = () =>
-  `You have been given an image with some mathematical expressions, equations, or graphical problems, and you need to solve them. 
-    Note: Use the PEMDAS rule for solving mathematical expressions. PEMDAS stands for the Priority Order: Parentheses, Exponents, Multiplication and Division (from left to right), Addition and Subtraction (from left to right). Parentheses have the highest priority, followed by Exponents, then Multiplication and Division, and lastly Addition and Subtraction. 
-    For example: 
-    Q. 2 + 3 * 4 
-    (3 * 4) => 12, 2 + 12 = 14. 
-    Q. 2 + 3 + 5 * 4 - 8 / 2 
-    5 * 4 => 20, 8 / 2 => 4, 2 + 3 => 5, 5 + 20 => 25, 25 - 4 => 21. 
-    YOU CAN HAVE FIVE TYPES OF EQUATIONS/EXPRESSIONS IN THIS IMAGE, AND ONLY ONE CASE SHALL APPLY EVERY TIME: 
-    Following are the cases: 
-    1. Simple mathematical expressions like 2 + 2, 3 * 4, 5 / 6, 7 - 8, etc.: In this case, solve and return the answer in the format of a LIST OF ONE DICT [{"expr": given expression, "result": calculated answer}]. 
-    2. Set of Equations like x^2 + 2x + 1 = 0, 3y + 4x = 0, 5x^2 + 6y + 7 = 12, etc.: In this case, solve for the given variable, and the format should be a COMMA SEPARATED LIST OF DICTS, with dict 1 as {"expr": "x", "result": 2, "assign": true} and dict 2 as {"expr": "y", "result": 5, "assign": true}. This example assumes x was calculated as 2, and y as 5. Include as many dicts as there are variables. 
-    3. Assigning values to variables like x = 4, y = 5, z = 6, etc.: In this case, assign values to variables and return another key in the dict called {"assign": true}, keeping the variable as "expr" and the value as "result" in the original dictionary. RETURN AS A LIST OF DICTS. 
-    4. Analyzing Graphical Math problems, which are word problems represented in drawing form, such as cars colliding, trigonometric problems, problems on the Pythagorean theorem, adding runs from a cricket wagon wheel, etc. These will have a drawing representing some scenario and accompanying information with the image. PAY CLOSE ATTENTION TO DIFFERENT COLORS FOR THESE PROBLEMS. You need to return the answer in the format of a LIST OF ONE DICT [{"expr": given expression, "result": calculated answer}]. 
-    5. Detecting Abstract Concepts that a drawing might show, such as love, hate, jealousy, patriotism, or a historic reference to war, invention, discovery, quote, etc. USE THE SAME FORMAT AS OTHERS TO RETURN THE ANSWER, where "expr" will be the explanation of the drawing, and "result" will be the abstract concept. 
-    Analyze the equation or expression in this image and return the answer according to the given rules: 
-    Make sure to use extra backslashes for escape characters like \\f -> \\\\f, \\n -> \\\\n, etc. 
-    Here is a dictionary of user-assigned variables. If the given expression has any of these variables, use its actual value from this dictionary accordingly: {}. 
-    DO NOT USE BACKTICKS OR MARKDOWN FORMATTING. 
-    PROPERLY QUOTE THE KEYS AND VALUES IN THE DICTIONARY FOR EASIER PARSING WITH JavaScript's JSON.parse.`;
+export const prompt = ({
+  canvasHeight,
+  canvasWidth,
+}: {
+  canvasHeight: number;
+  canvasWidth: number;
+}) =>
+  `You are provided with a canvas image of size { canvasHeight: ${canvasHeight}, canvasWidth: ${canvasWidth} }. The canvas contains various mathematical expressions, equations, or graphical problems. Your task is to analyze and solve these problems following the rules of PEMDAS: Parentheses, Exponents, Multiplication and Division (from left to right), Addition and Subtraction (from left to right).
+
+Before solving a problem, first check if the problem has already been solved in the image. If the answer is present and correct, acknowledge it internally without solving again. Do not return it. If the problem is unsolved or the answer is incorrect, solve it and return the result.
+
+Your response will be used in a function that draws text on a canvas, specifically formatted to ensure that the text is displayed correctly in terms of position and size. Each answer should specify its expression, calculated answer, font size, and the coordinates where it should be displayed on the canvas.
+
+Return only valid JSON objects with no additional formatting, markdown, or text. Ensure that your response consists solely of raw JSON. Do not use backticks, code blocks, or any extra characters.
+
+You may encounter five problem types on the canvas:
+
+1. Simple Arithmetic Expressions (e.g., 2 + 2): Solve and return the answer in JSON format. Example: [{"expr": "2 + 2", "answer": "4", "fontSize": 16, "coordinates": {"x": 100, "y": 200}}].
+
+2. Systems of Equations (e.g., x^2 + 2x + 1 = 0): Solve for the variables and return in JSON format. Example: [{"expr": "x", "answer": "2", "fontSize": 16, "coordinates": {"x": 150, "y": 250}}, {"expr": "y", "answer": "5", "fontSize": 16, "coordinates": {"x": 160, "y": 260}}].
+
+3. Variable Assignment (e.g., x = 4): Assign the value to the variable and return in JSON format. Example: [{"expr": "x", "answer": "4", "fontSize": 16, "coordinates": {"x": 200, "y": 300}}].
+
+4. Graphical Math Problems (e.g., interpreting a graph): Analyze and return the answer in JSON format. Example: [{"expr": "graph interpretation", "answer": "This shows a linear function.", "fontSize": 16, "coordinates": {"x": 250, "y": 350}}].
+
+5. Abstract Math Concepts (e.g., explaining a theorem): Provide the explanation in JSON format. Example: [{"expr": "Pythagorean theorem", "answer": "This illustrates a^2 + b^2 = c^2.", "fontSize": 16, "coordinates": {"x": 300, "y": 400}}].
+
+To calculate the coordinates:
+- Use a proportional approach based on the canvas dimensions. For example, for horizontal positioning (x), use a percentage of the canvas width (e.g., x = canvasWidth * 0.1 for a position at 10% of the canvas width). For vertical positioning (y), use a percentage of the canvas height (e.g., y = canvasHeight * 0.1 for a position at 10% of the canvas height).
+- Ensure that the font size is appropriate for the dimensions of the canvas. Consider the total number of items to be displayed and calculate the font size accordingly, ensuring that it fits well within the canvas.
+
+For all answers, return an array of JSON objects formatted as:
+[{"expr": "string", "answer": "string", "fontSize": number, "coordinates": {"x": number, "y": number}}, {"expr": "string", "answer": "string", "fontSize": number, "coordinates": {"x": number, "y": number}}].
+
+Note: Do not send response like this -> [{"expr": "3 + 7", "answer": "10", "fontSize": 32, "coordinates": {"x": 863 * 0.3, "y": 647 * 0.2}}] instesd first calculate them and send them like this -> [{"expr": "3 + 7", "answer": "10", "fontSize": 32, "coordinates": {"x": 258.9, "y": 129.7}}]
+
+Bad response -> [{"expr": "3 + 7", "answer": "10", "fontSize": 32, "coordinates": {"x": 863 * 0.3, "y": 647 * 0.2}}]
+Good response -> [{"expr": "3 + 7", "answer": "10", "fontSize": 32, "coordinates": {"x": 258.9, "y": 129.7}}]
+Return only raw JSON, no additional text, and no extra formatting. Use JSON.stringify if needed to ensure the output is properly structured JSON. Only return the final JSON array without any wrapping characters.`

@@ -1,5 +1,4 @@
 import { Dispatch, MouseEvent, RefObject, SetStateAction } from "react";
-
 const startDrawing = (
   e: MouseEvent<HTMLCanvasElement>,
   canvasRef: RefObject<HTMLCanvasElement>,

@@ -6,7 +6,8 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { prompt } from "@/lib/prompt";
 
 export async function POST(req: NextRequest) {
-  const { img, mimeType, displayName } = await req.json();
+  const { img, mimeType, displayName, canvasSize } = await req.json();
+  console.log({ canvasSize });
   const { API_KEY } = process.env;
   if (!img) {
     return NextResponse.json({ message: "image not found" }, { status: 500 });
@@ -30,7 +31,7 @@ export async function POST(req: NextRequest) {
       const genAI = new GoogleGenerativeAI(API_KEY);
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       const result = await model.generateContent([
-        prompt(),
+        prompt(canvasSize),
         {
           fileData: {
             fileUri: uploadResult.file.uri,
@@ -38,7 +39,7 @@ export async function POST(req: NextRequest) {
           },
         },
       ]);
-      console.log(result.response.text());
+      console.log(result.response);
       return NextResponse.json({
         message: result.response.text(),
       });
