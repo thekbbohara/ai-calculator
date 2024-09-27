@@ -18,8 +18,6 @@ import { RefObject, useState, useEffect } from "react";
 interface Ires {
   expr: string;
   answer: string;
-  fontSize: number;
-  coordinates: { x: number; y: number };
 }
 
 export default function RunDialog({
@@ -36,9 +34,9 @@ export default function RunDialog({
     setShowDescription(false);
     setData(null);
 
-    const answer = await calculate(canvasRef);
+    const answer: any = await calculate(canvasRef);
     if (answer != null) {
-      const res = JSON.parse(answer.message);
+      const res = JSON.parse(answer?.message);
       console.log(res);
       setTimeout(() => {
         setData(res);
