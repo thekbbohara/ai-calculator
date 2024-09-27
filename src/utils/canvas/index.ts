@@ -6,6 +6,7 @@ import resetCanvas from "./resetCanvas";
 import startDrawing from "./startDrawing";
 import startErasing from "./startErasing";
 import writeAnswer from "./writeAnswerBETA";
+import canvasResizeEvent from "./canvasResizeEvent";
 
 export {
   draw,
@@ -16,4 +17,5 @@ export {
   resetCanvas,
   canvasToImage,
   writeAnswer,
+  canvasResizeEvent,
 };

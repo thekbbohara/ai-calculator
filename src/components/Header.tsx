@@ -48,21 +48,6 @@ const Header = ({
             <EraserIcon />
           </Button>
         </div>
-        {/*{" "}
-        <Button
-          variant="destructive"
-          onClick={async () => {
-            const data = await calculate(canvasRef);
-            if (data != null) {
-              const msg = JSON.parse(data.message);
-              console.log(msg);
-              writeAnswer(canvasRef, msg);
-            }
-          }}
-        >
-          run
-        </Button>{" "}
-        */}
         <RunDialog canvasRef={canvasRef} />
       </div>
     </header>

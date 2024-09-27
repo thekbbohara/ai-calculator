@@ -9,7 +9,7 @@ const colors = [
   "#FF0000", // 5 Red
   "#DC143C", // 6 Crimson
   "#FFFF00", // 7 Yellow
-  "#FFA500", // 8 Orange
+  // "#FFA500", // 8 Orange
   "#EE82EE", // 9 Violet
 ];
 
