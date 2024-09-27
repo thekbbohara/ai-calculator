@@ -34,7 +34,7 @@ export default function RunDialog({
     setShowDescription(false);
     setData(null);
 
-    const answer: any = await calculate(canvasRef);
+    const answer = await calculate(canvasRef);
     if (answer != null) {
       const res = JSON.parse(answer?.message);
       console.log(res);
@@ -68,10 +68,14 @@ export default function RunDialog({
         {isLoading ? (
           <AlertDialogHeader>
             <AlertDialogTitle>Calculating...</AlertDialogTitle>
-            {showDescription && (
+            {showDescription ? (
               <AlertDialogDescription>
                 <Skeleton className="h-4 w-[250px]" />
                 <Skeleton className="h-4 w-[200px] mt-2" />
+              </AlertDialogDescription>
+            ) : (
+              <AlertDialogDescription>
+                <Skeleton className="h-4 w-[250px] bg-transparent invisible opacity-0" />
               </AlertDialogDescription>
             )}
           </AlertDialogHeader>

@@ -9,7 +9,7 @@ import {
   startErasing,
 } from "@/utils/canvas";
 import { MouseEvent, useEffect, useRef, useState } from "react";
-const page = () => {
+const Page = () => {
   const [selectedColor, setSelectedColor] = useState<string>("#FFFFFF");
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState<boolean>(false);
@@ -57,4 +57,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

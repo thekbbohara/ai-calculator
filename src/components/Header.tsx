@@ -2,8 +2,7 @@ import React, { Dispatch, RefObject, SetStateAction } from "react";
 import { Button } from "./ui/button";
 import { ColorPicker } from "./ColorPicker";
 import { EraserIcon } from "lucide-react";
-import { resetCanvas, writeAnswer } from "@/utils/canvas";
-import { calculate } from "@/utils";
+import { resetCanvas } from "@/utils/canvas";
 import RunDialog from "./RunDialog";
 
 const Header = ({

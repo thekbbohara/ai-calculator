@@ -38,7 +38,9 @@ export async function POST(req: NextRequest) {
           },
         },
       ]);
-      console.log(result.response);
+      console.log({
+        message: result.response.text(),
+      });
       return NextResponse.json({
         message: result.response.text(),
       });

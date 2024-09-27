@@ -4,15 +4,15 @@ import axios from "axios";
 
 const calculate = async (
   canvasRef: RefObject<HTMLCanvasElement>,
-): Promise<{ message: { expr: string; answer: string }[] } | null> => {
+): Promise<{ message: string } | null> => {
   try {
     const base64Data = canvasToImage(canvasRef);
     if (!base64Data) {
       console.error("Failed to convert canvas to image");
       return {
-        message: [
+        message: JSON.stringify([
           { expr: "Error", answer: "Failed to convert canvas to image" },
-        ],
+        ]),
       };
     }
     const img = base64Data.split(",")[1];
@@ -27,7 +27,9 @@ const calculate = async (
   } catch (error) {
     console.error("Error converting into image", error);
     return {
-      message: [{ expr: "Error", answer: "Error converting into image" }],
+      message: JSON.stringify([
+        { expr: "Error", answer: "Error converting into image" },
+      ]),
     };
   }
 };
