@@ -30,6 +30,15 @@ const Canvas: React.FC<CanvasProps> = ({
 
   return (
     <canvas
+      onTouchStart={() => {
+        console.log("touch start")
+      }}
+      onTouchMove={() => {
+        console.log("Touch moving")
+      }}
+      onTouchCancel={() => {
+        console.log("Touch cancel")
+      }}
       ref={canvasRef}
       onMouseDown={(e: MouseEvent<HTMLCanvasElement>) => {
         if (mode === "erase") {
