@@ -14,4 +14,19 @@ const startDrawing = (
     }
   }
 };
+export const startTouchDrawing = (
+  e: React.TouchEvent<HTMLCanvasElement>,
+  canvasRef: RefObject<HTMLCanvasElement>,
+  setIsDrawing: Dispatch<SetStateAction<boolean>>,
+) => {
+  const canvas = canvasRef.current;
+  if (canvas) {
+    const ctx = canvas?.getContext("2d");
+    if (ctx) {
+      ctx.beginPath();
+      ctx.moveTo(e.nativeEvent.touches[0].clientX, e.nativeEvent.touches[0].clientY);
+      setIsDrawing(true);
+    }
+  }
+};
 export default startDrawing;

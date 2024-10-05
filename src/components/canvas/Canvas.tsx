@@ -8,6 +8,8 @@ import {
   startErasing,
 } from "@/utils/canvas";
 import { CanvasProps } from "@/types/canvas";
+import { startTouchDrawing } from "@/utils/canvas/startDrawing";
+import { touchDraw } from "@/utils/canvas/draw";
 
 const Canvas: React.FC<CanvasProps> = ({
   canvasRef,
@@ -30,14 +32,11 @@ const Canvas: React.FC<CanvasProps> = ({
 
   return (
     <canvas
-      onTouchStart={() => {
-        console.log("touch start")
+      onTouchStart={(e) => {
+        startTouchDrawing(e, canvasRef, setIsDrawing)
       }}
-      onTouchMove={() => {
-        console.log("Touch moving")
-      }}
-      onTouchCancel={() => {
-        console.log("Touch cancel")
+      onTouchMove={(e) => {
+        touchDraw(e, canvasRef, selectedColor, isDrawing)
       }}
       ref={canvasRef}
       onMouseDown={(e: MouseEvent<HTMLCanvasElement>) => {
@@ -54,7 +53,7 @@ const Canvas: React.FC<CanvasProps> = ({
           erase(e, canvasRef, 20, isErasing);
         }
       }}
-      onTouchEnd={stopDrawing}
+      onTouchCancel={stopDrawing}
       onMouseOut={stopDrawing}
       onMouseUp={stopDrawing}
       onMouseLeave={stopDrawing}
