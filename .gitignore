@@ -8,7 +8,7 @@
 
 # testing
 /coverage
-
+src/utils/test.ts
 # next.js
 /.next/
 /out/
